@@ -25,8 +25,16 @@ module.exports =  class wiki extends Command {
             //Si la requete est DONE et qu'elle renvoie le code 200
             //On récupère le JSON et on le parse afin de l'afficher paragraphe par paragraphe
             if (this.readyState == 4 && this.status == 200) {
+                //On parse le json obtenu
                 var response = JSON.parse(this.responseText);
-                var tab = response.query.pages[12345].extract.split('\n').forEach((item) => {
+                var pages = response["query"]["pages"];
+                //On boucle pour déterminer l'id de la page
+                for (var id in pages) {
+                    if (pages.hasOwnProperty(id)) {
+                        var resume = pages[id];
+                    };
+                };
+                var tab = resume["extract"].split('\n').forEach((item) => {
                     message.channel.send(item);
                 });
             };
