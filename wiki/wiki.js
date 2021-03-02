@@ -54,8 +54,6 @@ module.exports =  class wiki extends Command {
                             if (this.readyState == 4 && this.status == 200) {
                                 //On parse le json obtenu
                                 var response3 = JSON.parse(this.responseText);
-                                //var tab = response["3"]["0"].split("\n");
-
                                 var pages3 = response3["query"]["pages"];
 
                                 //On boucle pour déterminer l'id de la page
