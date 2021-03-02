@@ -26,10 +26,9 @@ module.exports =  class wiki extends Command {
             //On récupère le JSON et on le parse afin de l'afficher paragraphe par paragraphe
             if (this.readyState == 4 && this.status == 200) {
                 var response = JSON.parse(this.responseText);
-                var tab = response.query.pages[12345].extract.split('\n');
-                for (let i = 0; i < tab.length; i++) {
-                    message.channel.send(tab[i]).catch(console.error);
-                };
+                var tab = response.query.pages[12345].extract.split('\n').forEach((item) => {
+                    message.channel.send(item);
+                });
             };
         };
     };
