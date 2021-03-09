@@ -38,9 +38,21 @@ module.exports =  class wiki extends Command {
                             .then((response) => {
                                 var resume = response.data["query"]["pages"][idPage]["extract"];
                                 var para = resume.split('\n');
-                                message.channel.send(para[0]);
+                                message.channel.send(para[0]).catch((error) => {
+                                    message.channel.send('Erreur : Impossible de trouver la page');
+                                    console.log(error);
+                                });
+                            }).catch((error) => {
+                                message.channel.send('Erreur : veuillez réessayer');
+                                console.log(error);
                             })
+                    }).catch((error) => {
+                        message.channel.send('Erreur : veuillez réessayer');
+                        console.log(error);
                     })
+            }).catch((error) => {
+                message.channel.send('Erreur : veuillez réessayer');
+                console.log(error);
             })
     };
 };
