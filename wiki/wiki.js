@@ -18,8 +18,9 @@ module.exports =  class wiki extends Command {
         let i = message.content.indexOf(' ');
         let args = [message.content.slice(0,i), message.content.slice(i+1)];
         args.shift();
+        let encoded = encodeURI(args);
 
-        axios.get('https://fr.wikipedia.org/w/api.php?action=opensearch&search=' + args)
+        axios.get('https://fr.wikipedia.org/w/api.php?action=opensearch&search=' + encoded)
             .then((response) => {
                 var pages = response.data["3"]["0"];
                 var finUrl = pages.split('/');
@@ -42,17 +43,11 @@ module.exports =  class wiki extends Command {
                                     message.channel.send('Erreur : Impossible de trouver la page');
                                     console.log(error);
                                 });
-                            }).catch((error) => {
-                                message.channel.send('Erreur : veuillez réessayer');
-                                console.log(error);
-                            })
-                    }).catch((error) => {
-                        message.channel.send('Erreur : veuillez réessayer');
-                        console.log(error);
-                    })
+                            });
+                    });
             }).catch((error) => {
                 message.channel.send('Erreur : veuillez réessayer');
                 console.log(error);
-            })
+            });
     };
 };
