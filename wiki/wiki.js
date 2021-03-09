@@ -39,10 +39,16 @@ module.exports =  class wiki extends Command {
                             .then((response) => {
                                 var resume = response.data["query"]["pages"][idPage]["extract"];
                                 var para = resume.split('\n');
-                                message.channel.send(para[0]).catch((error) => {
-                                    message.channel.send('Erreur : Impossible de trouver la page');
-                                    console.log(error);
-                                });
+
+                                let embed = new MessageEmbed()
+                                    .setTitle(decodeURI(nomPages.split('_').join(' ')))
+                                    .setColor(0xffd801)
+                                    .setDescription(para[0]);
+                                message.channel.send(embed);
+                                // message.channel.send(para[0]).catch((error) => {
+                                //     message.channel.send('Erreur : Impossible de trouver la page');
+                                //     console.log(error);
+                                // });
                             });
                     });
             }).catch((error) => {
