@@ -45,10 +45,6 @@ module.exports =  class wiki extends Command {
                                     .setColor(0xffd801)
                                     .setDescription(para[0]);
                                 message.channel.send(embed);
-                                // message.channel.send(para[0]).catch((error) => {
-                                //     message.channel.send('Erreur : Impossible de trouver la page');
-                                //     console.log(error);
-                                // });
                             });
                     });
             }).catch((error) => {
