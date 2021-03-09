@@ -1,4 +1,5 @@
 const { MessageEmbed } = require('discord.js');
+const { MessageReaction } = require('discord.js');
 const axios = require('axios').default;
 const Command = require('./command')
 
@@ -26,25 +27,25 @@ module.exports =  class wiki extends Command {
                 var finUrl = pages.split('/');
                 var nomPages = finUrl.pop();
 
-                axios.get('https://fr.wikipedia.org/w/api.php?action=query&format=json&prop=redirects&redirects&titles=' + nomPages)
+                axios.get('https://fr.wikipedia.org/w/api.php?action=query&format=json&formatversion=2&redirects&titles=' + nomPages)
                     .then((response) => {
-                        pages = response.data["query"]["pages"];
-                        for (var id in pages) {
-                            if (pages.hasOwnProperty(id)) {
-                                var idPage = pages[id]["pageid"];
-                            };
-                        };
+                        var idPage = response.data["query"]["pages"]["0"]["pageid"];
 
                         axios.get('https://fr.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=true&explaintext&redirects=1&pageids=' + idPage)
                             .then((response) => {
                                 var resume = response.data["query"]["pages"][idPage]["extract"];
                                 var para = resume.split('\n');
 
-                                let embed = new MessageEmbed()
-                                    .setTitle(decodeURI(nomPages.split('_').join(' ')))
-                                    .setColor(0xffd801)
-                                    .setDescription(para[0]);
-                                message.channel.send(embed);
+                                axios.get('https://fr.wikipedia.org/w/api.php?format=json&action=query&prop=pageimages&pageids=' + idPage)
+                                    .then((response) => {
+                                        var thumbnail = response.data["query"]["pages"][idPage]["thumbnail"]["source"];
+                                        let embed = new MessageEmbed()
+                                            .setTitle(decodeURI(nomPages.split('_').join(' ')))
+                                            .setThumbnail(thumbnail)
+                                            .setColor(0xffd801)
+                                            .setDescription(para[0]);
+                                        message.channel.send(embed);
+                                    });
                             });
                     });
             }).catch((error) => {
