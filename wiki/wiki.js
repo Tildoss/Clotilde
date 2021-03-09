@@ -53,14 +53,14 @@ module.exports = class wiki extends Command {
                                             .setColor(0xffd801)
                                             .setDescription(para[0]);
                                         message.channel.send(embed).catch((error) => {
-                                            message.channel.send('Erreur ; Rien trouvé');
+                                            message.channel.send('Erreur : page vide');
                                             console.log(error);
                                         });
                                     });
                             });
                     });
             }).catch((error) => {
-                message.channel.send('Erreur : veuillez réessayer');
+                message.channel.send('Erreur : page inexistante, changez votre requête');
                 console.log(error);
             });
     };
