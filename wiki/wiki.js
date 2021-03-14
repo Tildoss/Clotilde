@@ -60,7 +60,7 @@ module.exports = class wiki extends Command {
                                                 return ['◀️', '▶️'].includes(reaction.emoji.name) && user.id != message.author.id;
                                             };
 
-                                            const collector = message.createReactionCollector(filter, {time: 320000 });
+                                            const collector = message.createReactionCollector(filter, { time: 320000 });
                                             let cpt = 0;
                                             collector.on('collect', (reaction) => {
                                                 if (reaction.emoji.name === '◀️' && cpt > 0) {
@@ -84,10 +84,16 @@ module.exports = class wiki extends Command {
                                                     message.edit(editEmbed);
                                                 };
                                             });
+                                        }).catch((error) => {
+                                            console.log(error);
+                                            message.channel.send('Page inexistante');
                                         });
                                     });
                             });
                     });
-            });
+            }).catch((error) => {
+                console.log(error);
+                message.channel.send('Page inexistante');
+            })
     };
 };
