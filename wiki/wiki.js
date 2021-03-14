@@ -61,7 +61,7 @@ module.exports = class wiki extends Command {
                                                 return ['◀️', '▶️'].includes(reaction.emoji.name) && user.id != message.author.id;
                                             };
 
-                                            const collector = message.createReactionCollector(filter, { max: 20, time: 20000 });
+                                            const collector = message.createReactionCollector(filter, {time: 60000 });
                                             let cpt = 0;
                                             collector.on('collect', (reaction, user) => {
                                                 if (reaction.emoji.name === '◀️' && cpt > 0) {
