@@ -55,58 +55,40 @@ module.exports = class wiki extends Command {
                                             .setColor(0xffd801)
                                             .setDescription(para[0]);
                                         message.channel.send(embed).then((message) => {
-                                            message.react('◀️').then(() =>
-                                                message.react('▶️')).then(() => {
-                                                    const filter = (reaction) => {
-                                                        return ['◀️', '▶️'].includes(reaction.emoji.name);
-                                                    };
-                                                    console.log(filter);
-                                                    message.awaitReactions(filter, { max: 10, time: 60000, errors: ['time'] }).then(collected => {
-                                                        const reaction = collected.first();
-                                                        let cpt = 0;
-                                                        //console.log(reaction);
-                                                        //console.log(collected);
-                                                        //console.log(collected.first());
-                                                        if (collected.first().emoji.name === '◀️' && cpt > 0) {
-                                                            cpt--;
-                                                            let editEmbed = new MessageEmbed()
-                                                                .setTitle(decodeURI(nomPages.split('_').join(' ')))
-                                                                .setURL('https://fr.wikipedia.org/wiki/' + titre.split(' ').join('_'))
-                                                                .setThumbnail(thumbnail)
-                                                                .setColor(0xffd801)
-                                                                .setDescription(para[cpt]);
-                                                            message.edit(editEmbed);
-                                                        };
-                                                        if (collected.first().emoji.name === '▶️' && cpt < para.length) {
-                                                            cpt++;
-                                                            let editEmbed = new MessageEmbed()
-                                                                .setTitle(decodeURI(nomPages.split('_').join(' ')))
-                                                                .setURL('https://fr.wikipedia.org/wiki/' + titre.split(' ').join('_'))
-                                                                .setThumbnail(thumbnail)
-                                                                .setColor(0xffd801)
-                                                                .setDescription(para[cpt]);
-                                                            message.edit(editEmbed);
-                                                        };
-                                                    })
-                                                        .catch((error) => {
-                                                            message.channel.send('grosse folle');
-                                                            //console.log(error);
-                                                        });
-                                                })
-                                                .catch((error) => {
-                                                    console.log('Erreur reaction');
-                                                    console.log(error);
-                                                });
-                                        }).catch((error) => {
-                                            message.channel.send('Erreur : page inexistante, changez votre requête');
-                                            console.log(error);
+                                            message.react('◀️')
+                                                .then(() => message.react('▶️'));
+                                            const filter = (reaction, user) => {
+                                                return ['◀️', '▶️'].includes(reaction.emoji.name) && user.id != message.author.id;
+                                            };
+
+                                            const collector = message.createReactionCollector(filter, { max: 20, time: 20000 });
+                                            let cpt = 0;
+                                            collector.on('collect', (reaction, user) => {
+                                                if (reaction.emoji.name === '◀️' && cpt > 0) {
+                                                    cpt--;
+                                                    let editEmbed = new MessageEmbed()
+                                                        .setTitle(decodeURI(nomPages.split('_').join(' ')))
+                                                        .setURL('https://fr.wikipedia.org/wiki/' + titre.split(' ').join('_'))
+                                                        .setThumbnail(thumbnail)
+                                                        .setColor(0xffd801)
+                                                        .setDescription(para[cpt]);
+                                                    message.edit(editEmbed);
+                                                };
+                                                if (reaction.emoji.name === '▶️' && cpt < para.length - 1) {
+                                                    cpt++;
+                                                    let editEmbed = new MessageEmbed()
+                                                        .setTitle(decodeURI(nomPages.split('_').join(' ')))
+                                                        .setURL('https://fr.wikipedia.org/wiki/' + titre.split(' ').join('_'))
+                                                        .setThumbnail(thumbnail)
+                                                        .setColor(0xffd801)
+                                                        .setDescription(para[cpt]);
+                                                    message.edit(editEmbed);
+                                                };
+                                            });
                                         });
                                     });
                             });
                     });
-            }).catch((error) => {
-                message.channel.send('Erreur : page inexistante, changez votre requête');
-                console.log(error);
             });
     };
 };
