@@ -1,5 +1,4 @@
-const { MessageEmbed, User } = require('discord.js');
-const { MessageReaction } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const axios = require('axios').default;
 const Command = require('./command')
 
@@ -61,9 +60,9 @@ module.exports = class wiki extends Command {
                                                 return ['◀️', '▶️'].includes(reaction.emoji.name) && user.id != message.author.id;
                                             };
 
-                                            const collector = message.createReactionCollector(filter, {time: 60000 });
+                                            const collector = message.createReactionCollector(filter, {time: 320000 });
                                             let cpt = 0;
-                                            collector.on('collect', (reaction, user) => {
+                                            collector.on('collect', (reaction) => {
                                                 if (reaction.emoji.name === '◀️' && cpt > 0) {
                                                     cpt--;
                                                     let editEmbed = new MessageEmbed()
