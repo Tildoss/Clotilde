@@ -45,8 +45,6 @@ module.exports = class wiki extends Command {
                                         //On recup la miniature
                                         const thumbnail = response.data["query"]["pages"][idPage]["thumbnail"]["source"];
                                         //On crée le message embed
-                                        //compteur pour afficher para[cpt]
-                                        //let cpt = 0;
                                         let embed = new MessageEmbed()
                                             .setTitle(decodeURI(nomPages.split('_').join(' ')))
                                             .setURL('https://fr.wikipedia.org/wiki/' + titre.split(' ').join('_'))
@@ -60,7 +58,7 @@ module.exports = class wiki extends Command {
                                                 return ['◀️', '▶️'].includes(reaction.emoji.name) && user.id != message.author.id;
                                             };
 
-                                            const collector = message.createReactionCollector(filter, { time: 320000 });
+                                            const collector = message.createReactionCollector(filter, { time: 900000 });
                                             let cpt = 0;
                                             collector.on('collect', (reaction) => {
                                                 if (reaction.emoji.name === '◀️' && cpt > 0) {
