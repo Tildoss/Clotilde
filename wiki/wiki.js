@@ -1,6 +1,6 @@
 const { MessageEmbed } = require('discord.js');
 const axios = require('axios').default;
-const Command = require('./command')
+const Command = require('../commande/command');
 
 module.exports = class wiki extends Command {
 
