@@ -8,9 +8,7 @@ module.exports = class autist extends Command {
 
     static action (message) {
         let indice = message.content.indexOf(' ');
-        let args = [message.content.slice(0, indice), message.content.slice(indice + 1)];
-        args.shift();
-        args = args.join();
+        let args = message.content.slice(indice + 1);
 
         let motAutist = '';
         for (let i = 0; i < args.length; i++) {

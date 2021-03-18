@@ -16,8 +16,7 @@ module.exports = class wiki extends Command {
 
         //On split le message pour récupérer les arguments et on supprime le premier élément qui est *wiki
         let i = message.content.indexOf(' ');
-        let args = [message.content.slice(0, i), message.content.slice(i + 1)];
-        args.shift();
+        let args = message.content.slice(i + 1);
         //On encode afin de pouvoir passer les accents dans la requête
         let encoded = encodeURI(args);
 
