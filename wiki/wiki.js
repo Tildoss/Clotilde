@@ -14,7 +14,7 @@ module.exports = class wiki extends Command {
         //ensuite query redirects&prop=redirects : je récupère la pageid
         //finalement query pageid : on a la page
 
-        //On split le message pour récupérer les arguments et on supprime le premier élément qui est *wiki
+        //On slice le message pour récupérer les arguments
         let i = message.content.indexOf(' ');
         let args = message.content.slice(i + 1);
         //On encode afin de pouvoir passer les accents dans la requête
