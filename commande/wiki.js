@@ -42,12 +42,12 @@ module.exports = class wiki extends Command {
                                 axios.get('https://fr.wikipedia.org/w/api.php?format=json&action=query&prop=pageimages&pageids=' + idPage)
                                     .then((response) => {
                                         //On recup la miniature
-                                        const thumbnail = response.data["query"]["pages"][idPage]["thumbnail"]["source"];
+                                        // const thumbnail = response.data["query"]["pages"][idPage]["thumbnail"]["source"];
                                         //On crée le message embed
                                         let embed = new MessageEmbed()
                                             .setTitle(decodeURI(nomPages.split('_').join(' ')))
                                             .setURL('https://fr.wikipedia.org/wiki/' + titre.split(' ').join('_'))
-                                            .setThumbnail(thumbnail)
+                                            // .setThumbnail(thumbnail)
                                             .setColor(0xffd801)
                                             .setDescription(para[0]);
                                         message.channel.send(embed).then((message) => {
@@ -65,7 +65,7 @@ module.exports = class wiki extends Command {
                                                     let editEmbed = new MessageEmbed()
                                                         .setTitle(decodeURI(nomPages.split('_').join(' ')))
                                                         .setURL('https://fr.wikipedia.org/wiki/' + titre.split(' ').join('_'))
-                                                        .setThumbnail(thumbnail)
+                                                        // .setThumbnail(thumbnail)
                                                         .setColor(0xffd801)
                                                         .setDescription(para[cpt]);
                                                     message.edit(editEmbed);
@@ -75,7 +75,7 @@ module.exports = class wiki extends Command {
                                                     let editEmbed = new MessageEmbed()
                                                         .setTitle(decodeURI(nomPages.split('_').join(' ')))
                                                         .setURL('https://fr.wikipedia.org/wiki/' + titre.split(' ').join('_'))
-                                                        .setThumbnail(thumbnail)
+                                                        // .setThumbnail(thumbnail)
                                                         .setColor(0xffd801)
                                                         .setDescription(para[cpt]);
                                                     message.edit(editEmbed);
